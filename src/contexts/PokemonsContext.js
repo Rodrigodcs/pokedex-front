@@ -11,7 +11,13 @@ export function PokemonsProvider({ children }) {
     const [pokemons, setPokemons] = useState(null);
 
     useEffect(() => {
-        updatePokemons();
+        axios.get(`https://pokedex-api-backend.herokuapp.com/pokemons`, {
+            headers: {
+                Authorization: `Bearer ${token?.token}`
+            }
+        }).then(response => {
+            setPokemons(response.data);
+        });
     }, [token?.token]);
 
     function updatePokemons() {
